@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  psql:
+      container_name: postgres_ips_server
+      image: postgres
+      environment:
+          - IPS_SERVER_POSTGRES_USER=postgres
+          - IPS_SERVER_POSTGRES_PASSWORD=postgres
+          - IPS_SERVER_POSTGRES_DB=ips_server
+      restart: unless-stopped
+  ips_server:
+      build: .
+      container_name: ips_server_srv
+      restart: always
+      environment:
+          - IPS_SERVER_POSTGRES_NAME=ips_server
+          - IPS_SERVER_POSTGRES_HOST=localhost
+          - IPS_SERVER_POSTGRES_PORT=5432
+          - IPS_SERVER_POSTGRES_USER=postgres
+          - IPS_SERVER_POSTGRES_PASSWORD=postgres
+          - IPS_SERVER_EMAIL_HOST=smtp.gmail.com
+          - IPS_SERVER_EMAIL_PORT=587
+          - IPS_SERVER_EMAIL_HOST_USER=test.netpardaz@gmail.com
+          - IPS_SERVER_EMAIL_HOST_PASSWORD=test
+      ports:
+          - "8000:8000"  
+      command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver"
+      depends_on:
+          - psql
+          
