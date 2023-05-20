@@ -105,7 +105,7 @@ class DeleteUserView(APIView):
 class ListUsersView(generics.ListAPIView):
     permission_classes = [IsAdminOnly|IsSupporterOnly]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['username','phonenumber','is_verified','deleted_at']
+    filterset_fields = ['username','phone_number','is_verified','deleted_at']
     
     def get_serializer(self, *args, **kwargs):
         if self.request.user.is_superuser:
@@ -122,4 +122,3 @@ class ListUsersView(generics.ListAPIView):
             return Users.objects.all()
         else:
             return Users.objects.filter(is_customer=True)
-    
