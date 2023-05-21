@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     "rest_framework_api_key",
-    # 'drf_yasg',
     'drf_spectacular',
     'django_filters',
     
@@ -134,11 +133,10 @@ SIMPLE_JWT = {
 
 #swagger
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your Project API',
-    'DESCRIPTION': 'Your project description',
+    'TITLE': 'IPS SERVER',
+    'DESCRIPTION': 'intrusion prevention system',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
 }
 
 # Password validation
