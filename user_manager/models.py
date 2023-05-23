@@ -12,6 +12,7 @@ class Users(AbstractUser):
     username = models.CharField(("username"),max_length=150,unique=False,help_text=("Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."),validators=[AbstractUser.username_validator],null=True,blank=True)
     phone_number = models.CharField(max_length=25,null=True,blank=True)
     email = models.EmailField(max_length=254, unique=True)
+    created_by = models.ForeignKey("self",null=True,blank=True,on_delete=models.DO_NOTHING)
     is_verified = models.BooleanField(default=False)
     is_developer = models.BooleanField(default=False)
     is_seller = models.BooleanField(default=False)

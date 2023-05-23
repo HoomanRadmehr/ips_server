@@ -27,7 +27,7 @@ class CreateUserView(APIView):
         data = request.data
         ser_data = get_user_serializer(request,data=data)
         if ser_data.is_valid():
-            ser_data.validated_data['is_verified']=False
+            ser_data.context.update({"request":request})
             ser_data.create(ser_data.validated_data)
             return Response(ser_data.validated_data)
             # try:
