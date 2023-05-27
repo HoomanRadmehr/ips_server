@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from products.models import Category,Brand,Device,DeviceSerial
 from rules.serializers import ListRuleSerializer
+from user_manager.models import Users
 from user_manager.serializers import SimpleUserSerializer
 from rules.models import Rule
 
@@ -57,7 +58,7 @@ class SellerSerialSerializer(serializers.ModelSerializer):
         fields = "__all__"
       
       
-class AsignRuleSerializer(serializers.Serializer):
+class AssignRuleSerializer(serializers.Serializer):
     rule_id = serializers.UUIDField()
     serial_id = serializers.UUIDField()
     
@@ -76,4 +77,15 @@ class AsignRuleSerializer(serializers.Serializer):
             return serial_id
         except:
             raise serializers.ValidationError("invalid serial")
+        
+
+class AssignOwnerSerializer(serializers.Serializer):
+    serial = serializers.UUIDField()
+    
+    def validate_serial(self,serial):
+        serial_obj = DeviceSerial.objects.filter(id=serial)
+        if serial_obj:
+            return serial
+        else:
+            raise serializers.ValidationError("invalid id for serial")
         

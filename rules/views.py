@@ -16,9 +16,9 @@ class ListRuleView(generics.ListAPIView):
     
     permission_classes = [IsAdminOnly|IsSupporterOnly|IsCustomerOnly|IsDeveloperOnly]
     serializer_class = ListRuleSerializer
-    queryset = Rule.objects.filter(is_verified=True)
+    queryset = Rule.objects.filter(is_verified=True,is_public=True)
     filter_backends = [DjangoFilterBackend,SearchFilter]
-    filterset_fields = ['action','created_at','updated_at']
+    filterset_fields = ['created_at','updated_at']
     search_fields = ['description']
     
     def get_queryset(self):
@@ -31,13 +31,13 @@ class ListRuleView(generics.ListAPIView):
 class RetrieveRuleView(generics.RetrieveAPIView):
     permission_classes = [IsAdminOnly|IsSupporterOnly|IsCustomerOnly|IsDeveloperOnly]
     serializer_class = RetrieveRuleSerializer
-    queryset = Rule.objects.filter(is_verified=True,is_public=True)
+    queryset = Rule.objects.filter(is_verified=True)
     
     def get_queryset(self):
         if self.request.user.is_superuser or self.request.user.is_developer:
             return Rule.objects.all()
         else:
-            return Rule.objects.filter(is_verified=True,is_public=True)
+            return Rule.objects.filter(is_verified=True)
         
 class UpdateRuleView(generics.UpdateAPIView):
     permission_classes = [IsAdminOnly|IsDeveloperOnly]
