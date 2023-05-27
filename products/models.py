@@ -1,4 +1,5 @@
 from django.db import models
+from rules.models import Rule
 import uuid
 
 class Category(models.Model):
@@ -42,6 +43,7 @@ class DeviceSerial(models.Model):
     device = models.ForeignKey(Device,on_delete=models.DO_NOTHING,null=False,blank=False)
     creator = models.ForeignKey(Users,on_delete=models.DO_NOTHING,null=False,blank=True,related_name="serial_creator")
     owner = models.ForeignKey(Users,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="device_owner")
+    recommended_rules = models.ManyToManyField(Rule,related_name='rules_serial')
     address = models.TextField(null=True,blank=True)
     organization_number = models.CharField(max_length=25,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

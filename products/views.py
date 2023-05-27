@@ -2,9 +2,10 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rules.models import Rule
 from products.models import Category,Brand,Device,DeviceSerial
-from products.serializers import CategorySerializer,BrandSerializer,DeviceCreateSerializer,SerialSerializer,DeviceSerializer
-from user_manager.permissions import IsAdminOrReadOnly,IsAdminOnly,IsSellerOnly,IsInstallerOnly,IsSupporterOnly
+from products.serializers import CategorySerializer,BrandSerializer,DeviceCreateSerializer,SerialSerializer,DeviceSerializer,AsignRuleSerializer,SellerSerialSerializer
+from user_manager.permissions import IsAdminOrReadOnly,IsAdminOnly,IsSellerOnly,IsInstallerOnly,IsSupporterOnly,IsCustomerOnly
 from django_filters import rest_framework as filters
 from products.filters import CategoryFilter,BrandFilter,DeviceFilter,SerialFilter
 from rest_framework import filters as rest_filters
@@ -54,10 +55,23 @@ class DeviceView(ModelViewSet):
 class SerialView(ModelViewSet):
     queryset = DeviceSerial.objects.all()
     serializer_class = SerialSerializer
-    permission_classes = [IsAdminOnly|IsSellerOnly|IsSupporterOnly|IsInstallerOnly]
+    permission_classes = [IsAdminOnly|IsSellerOnly|IsSupporterOnly|IsInstallerOnly,IsCustomerOnly]
     http_method_names = ['get','post','head','put','patch']
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = SerialFilter
+    
+    def get_serializer_class(self):
+        if self.request.user.is_seller:
+            return SellerSerialSerializer
+        return self.serializer_class
+    
+    def get_queryset(self):
+        if not self.request.user.is_customer:
+            queryset = DeviceSerial.objects.all()
+        else:
+            queryset = DeviceSerial.objects.filter(owner_id=self.request.user.id)
+        queryset = queryset.prefetch_related("recommended_rules")
+        return queryset
     
     def create(self, request, *args, **kwargs):
         from user_manager.models import Users
@@ -99,4 +113,26 @@ class SerialView(ModelViewSet):
         except:
             logging.error(traceback.format_exc())
             return Response({"error":"invalid device id or user id"},status=status.HTTP_400_BAD_REQUEST)
+
+
+class AsignRule(APIView):
+    permission_classes = [IsAdminOnly]
+    
+    def post(self,request):
+        try:
+            data = request.data
+            ser_data = AsignRuleSerializer(data=data)
+            if ser_data.is_valid():
+                serial_id = str(ser_data.validated_data['serial_id'])
+                rule_id = str(ser_data.validated_data['rule_id'])
+                serial = DeviceSerial.objects.get(id=serial_id)
+                rule = Rule.objects.get(id=rule_id)
+                serial.recommended_rules.add(rule)
+                serial.save()
+                return Response(ser_data.data,status=status.HTTP_201_CREATED)
+            else:
+                return Response(ser_data.errors,status=status.HTTP_400_BAD_REQUEST)
+        except:
+            logging.error(traceback.format_exc())
+            return Response({'error':'something wrong'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         

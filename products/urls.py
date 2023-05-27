@@ -10,6 +10,6 @@ router.register('serial',views.SerialView)
 
 app_name='products'
 urlpatterns = [
-    
+    path('asign_rule/',views.AsignRule.as_view(),name="asign_rule"),
 ]
 urlpatterns+=router.urls

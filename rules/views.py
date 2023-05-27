@@ -25,19 +25,19 @@ class ListRuleView(generics.ListAPIView):
         if self.request.user.is_superuser or self.request.user.is_developer:
             return Rule.objects.all()
         else:
-            return Rule.objects.filter(is_verified=True)
+            return Rule.objects.filter(is_verified=True,is_public=True)
     
     
 class RetrieveRuleView(generics.RetrieveAPIView):
     permission_classes = [IsAdminOnly|IsSupporterOnly|IsCustomerOnly|IsDeveloperOnly]
     serializer_class = RetrieveRuleSerializer
-    queryset = Rule.objects.filter(is_verified=True)
+    queryset = Rule.objects.filter(is_verified=True,is_public=True)
     
     def get_queryset(self):
         if self.request.user.is_superuser or self.request.user.is_developer:
             return Rule.objects.all()
         else:
-            return Rule.objects.filter(is_verified=True)
+            return Rule.objects.filter(is_verified=True,is_public=True)
         
 class UpdateRuleView(generics.UpdateAPIView):
     permission_classes = [IsAdminOnly|IsDeveloperOnly]
