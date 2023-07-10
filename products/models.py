@@ -26,18 +26,22 @@ class Device(models.Model):
     category = models.ForeignKey(Category,related_name="category",on_delete=models.CASCADE,null=True,blank=True)
     brand = models.ForeignKey(Brand,related_name="brand",on_delete=models.CASCADE,null=True,blank=True)
     model = models.CharField(max_length=50,null=False,blank=False,default="abcd")
+    image = models.ImageField(upload_to="products",null=True,blank=True)
     description = models.TextField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True,blank=True)
     updated_at = models.DateTimeField(auto_now=True,null=True,blank=True)
+    
     
     def __str__(self) -> str:
         return f"{self.brand}-{self.model}"
     
     class Meta:
-        unique_together = ("category","brand")
+        unique_together = ("category","brand","model")
         
 class DeviceSerial(models.Model):
     from user_manager.models import Users
+    
+    LICENSE_DURATION_CHOICES = (('1y','1Y'),('2y','2Y'),('3y','3Y'))
     
     id = models.UUIDField(primary_key=True,default=uuid.uuid4)
     device = models.ForeignKey(Device,on_delete=models.DO_NOTHING,null=False,blank=False)
@@ -46,6 +50,7 @@ class DeviceSerial(models.Model):
     recommended_rules = models.ManyToManyField(Rule,related_name='rules_serial')
     address = models.TextField(null=True,blank=True)
     organization_number = models.CharField(max_length=25,null=True,blank=True)
+    license_exp = models.CharField(choices=LICENSE_DURATION_CHOICES,default='1y')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

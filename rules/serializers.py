@@ -11,7 +11,7 @@ class ListRuleSerializer(serializers.ModelSerializer):
 class RetrieveRuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rule
-        fields = ['id','name','code','description','is_verified','is_public','version']
+        fields = ['id','name','code','description','is_verified','is_public','version','created_at','updated_at']
 
         
 class AdminRuleSerializer(serializers.ModelSerializer):

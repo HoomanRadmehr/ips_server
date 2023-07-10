@@ -78,7 +78,7 @@ class UpdateUserView(APIView):
         try:
             user = Users.objects.get(id=user_id)
             data = request.data
-            ser_data = get_user_serializer(request=request,instance=user,data=data)
+            ser_data = get_user_serializer(request=request,instance=user,data=data,partial=True)
             if ser_data.is_valid():
                 ser_data.save()
                 return Response({"info":"updated successfully"},status=status.HTTP_202_ACCEPTED)
@@ -122,3 +122,4 @@ class ListUsersView(generics.ListAPIView):
             return Users.objects.all()
         else:
             return Users.objects.filter(is_customer=True)
+        

@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from products.models import Category,Brand,Device,DeviceSerial
 from rules.serializers import ListRuleSerializer
-from user_manager.models import Users
 from user_manager.serializers import SimpleUserSerializer
 from rules.models import Rule
+from datetime import timedelta
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,11 +36,24 @@ class SerialSerializer(serializers.ModelSerializer):
     device = DeviceSerializer(read_only=True)
     creator = SimpleUserSerializer(read_only=True)
     owner = SimpleUserSerializer(read_only=True)
+    license_exp = serializers.SerializerMethodField()
     recommended_rules = ListRuleSerializer(read_only=True,many=True)
     
     class Meta:
         model = DeviceSerial
         fields = "__all__"
+        
+    def get_license_exp(self,obj):
+        duration = obj.license_exp
+        created_at = obj.created_at
+        if duration == '1y':
+            expiration = created_at+timedelta(days=365)
+        elif duration == '2y':
+            expiration = created_at+timedelta(days=365*2)
+        else:
+            expiration = created_at+timedelta(days=365*3)
+        return expiration
+    
     
     def create(self, validated_data):
         return DeviceSerial.objects.create(**validated_data)

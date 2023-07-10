@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+from django.utils.translation import gettext
 
 
 load_dotenv()
@@ -30,7 +31,7 @@ SECRET_KEY = 'django-insecure-31^4nr48dx&5gr3@lvce8_yms_d+)akbi^sd!*63sb2d2tfx($
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1","*"]
+ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1","*","192.168.1.50","192.168.2.21"]
 
 
 # Application definition
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     "rest_framework_api_key",
     'drf_spectacular',
     'django_filters',
+    'corsheaders',
     
     # apps
     'rules.apps.RulesConfig',
@@ -61,12 +63,32 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = [
+    ('fa', ('Farsi')),
+    ('en', ('English')),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+USE_I18N = True
+
+USE_L10N = True
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'ips_server.urls'
 
@@ -191,3 +213,6 @@ EMAIL_HOST=os.getenv("IPS_SERVER_EMAIL_HOST")
 EMAIL_PORT=os.getenv("IPS_SERVER_EMAIL_PORT")
 EMAIL_HOST_USER=os.getenv("IPS_SERVER_EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("IPS_SERVER_EMAIL_HOST_PASSWORD")
+
+#snort
+IPS_SERVER_SNORT_RULES_PATH=os.getenv("IPS_SERVER_SNORT_RULES_PATH")
