@@ -5,12 +5,14 @@ from rest_framework import status
 from rules.models import Rule
 from products.models import Category,Brand,Device,DeviceSerial
 from products.serializers import CategorySerializer,BrandSerializer,DeviceCreateSerializer,SerialSerializer,DeviceSerializer,AssignRuleSerializer,SellerSerialSerializer,AssignOwnerSerializer
-from user_manager.permissions import IsAdminOrReadOnly,IsAdminOnly,IsSellerOnly,IsInstallerOnly,IsSupporterOnly,IsCustomerOnly
+from user_manager.permissions import IsAdminOrReadOnly,IsAdminOnly,IsSellerOnly,IsInstallerOnly,IsSupporterOnly,IsCustomerOnly,IsCustomerAndOwner
 from django_filters import rest_framework as filters
 from products.filters import CategoryFilter,BrandFilter,DeviceFilter,SerialFilter
 from rest_framework import filters as rest_filters
+from rest_framework.pagination import LimitOffsetPagination
 import logging
 import traceback
+
 
 class CategoryView(ModelViewSet):
     queryset = Category.objects.all()
@@ -33,6 +35,11 @@ class DeviceView(ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,rest_filters.SearchFilter)
     search_fields = ['description',]
     filterset_class = DeviceFilter
+    pagination_class = LimitOffsetPagination
+    page_size = 10
+    limit = 10
+    offset = 0
+    
     
     def create(self, request, *args, **kwargs):
         try:
@@ -50,12 +57,16 @@ class DeviceView(ModelViewSet):
                 return Response(ser_data.errors,status=status.HTTP_201_CREATED)
         except:
             return Response({"error":"invalid id for brand or category or duplication"},status=status.HTTP_400_BAD_REQUEST)
+        
+    def list(self, request, *args, **kwargs):
+        
+        return super().list(request, *args, **kwargs)
     
 
 class SerialView(ModelViewSet):
     queryset = DeviceSerial.objects.all()
     serializer_class = SerialSerializer
-    permission_classes = [IsAdminOnly|IsSellerOnly|IsCustomerOnly]
+    permission_classes = [IsAdminOnly|IsSellerOnly|IsCustomerAndOwner]
     http_method_names = ['get','post','head']
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = SerialFilter
