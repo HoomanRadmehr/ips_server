@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 from datetime import timedelta
 from django.utils.translation import gettext
 
-
+MODE=os.getenv("IPS_SERVER_MODE")
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -216,3 +216,9 @@ EMAIL_HOST_PASSWORD = os.getenv("IPS_SERVER_EMAIL_HOST_PASSWORD")
 
 #snort
 IPS_SERVER_SNORT_RULES_PATH=os.getenv("IPS_SERVER_SNORT_RULES_PATH")
+
+if MODE:
+    if MODE.lower()=="production" or MODE.lower()=='prod':
+        DEBUG=False
+        from django.core.management.utils import get_random_secret_key
+        SECRET_KEY=get_random_secret_key()
