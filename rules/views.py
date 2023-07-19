@@ -5,6 +5,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from user_manager.permissions import IsAdminOnly,IsSupporterOnly,IsDeveloperOnly,IsCustomerOnly
 from rest_framework import status
+from ips_server.pagination import CustomPagination
 from rules.serializers import ListRuleSerializer,RetrieveRuleSerializer,AdminRuleSerializer
 from rules.models import Rule
 
@@ -20,6 +21,7 @@ class ListRuleView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend,SearchFilter]
     filterset_fields = ['created_at','updated_at']
     search_fields = ['description']
+    pagination_class = CustomPagination
     
     def get_queryset(self):
         if self.request.user.is_superuser or self.request.user.is_developer:
