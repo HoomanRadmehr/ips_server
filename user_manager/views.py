@@ -29,35 +29,26 @@ class CreateUserView(APIView):
         if ser_data.is_valid():
             ser_data.context.update({"request":request})
             ser_data.create(ser_data.validated_data)
-            return Response(ser_data.validated_data)
-            # try:
-            #     user = Users.objects.get(email=ser_data.validated_data['email'])
-            #     token = str(RefreshToken.for_user(user).access_token)
-            #     current_site = get_current_site(request).domain
-            #     relative_link = reverse('users:email_verification')
-            #     abs_url = "http://"+current_site+relative_link+"token="+token
-            #     email_body = f"wellcome to {current_site} to verify your email click the link bellow \n {abs_url}"
-            #     data = {
-            #         "subject":"EMAIL VERIFICATION",
-            #         "body":email_body,
-            #         "to":ser_data.validated_data['email']
-            #         }
-            #     send_email(data)
-            #     logging.info(f'new user cre ated by user id {request.user.id}')
-            #     return Response({"info":"user created"},status=status.HTTP_201_CREATED)
-            # except:
-            #     logging.error(traceback.format_exc())
-            #     return Response({"error":"somthing wrong happen"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            try:
+                user = Users.objects.get(email=ser_data.validated_data['email'])
+                token = str(RefreshToken.for_user(user).access_token)
+                current_site = get_current_site(request).domain
+                relative_link = reverse('users:email_verification')
+                abs_url = "http://"+current_site+relative_link+"token="+token
+                email_body = f"wellcome to {current_site} to verify your email click the link bellow \n {abs_url}"
+                data = {
+                    "subject":"EMAIL VERIFICATION",
+                    "body":email_body,
+                    "to":ser_data.validated_data['email']
+                    }
+                send_email(data)
+                logging.info(f'new user cre ated by user id {request.user.id}')
+                return Response({"info":"user created"},status=status.HTTP_201_CREATED)
+            except:
+                logging.error(traceback.format_exc())
+                return Response({"error":"somthing wrong happen"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(ser_data.errors,status=status.HTTP_400_BAD_REQUEST)
-        # data = {
-        #             "subject":"EMAIL VERIFICATION",
-        #             "body":"HI",
-        #             "to":"hooman.radmehr.dev@gmail.com"
-        #         }
-        # send_email(data)
-        # print("send")
-        # return Response({"send"})
     
     
 class RetrieveUserView(APIView):
