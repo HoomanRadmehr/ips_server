@@ -2,11 +2,13 @@ version: '3.7'
 services:
   psql:
       container_name: postgres_ips_server
-      image: postgres
+      image: nexus:443/postgres:latest
       environment:
           - IPS_SERVER_POSTGRES_USER=postgres
           - IPS_SERVER_POSTGRES_PASSWORD=postgres
           - IPS_SERVER_POSTGRES_DB=ips_server
+      ports:
+          - '5432:5432'
       restart: unless-stopped
   ips_server:
       build: .
