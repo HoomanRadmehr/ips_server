@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM nexus:443/netpardaz/ubuntu-python3:20.04
 
 USER root
 COPY . ./app
