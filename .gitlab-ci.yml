@@ -1,0 +1,29 @@
+stages:
+  - build
+
+build:
+  stage: build
+  image:
+    name: nexus:443/docker/compose
+  variables:
+    COMPOSE_HTTP_TIMEOUT: 180
+  before_script:
+    - docker info
+    - docker-compose version
+  script:
+    - 'echo "10.27.95.5 nexus" >>/etc/hosts'
+    - docker-compose down || true
+    - docker rm -f ipsclient_srv || true
+    - docker-compose up -d
+    - |+
+      i=1
+      while [ True ]; do
+        sleep 1
+        docker logs ipsclient_srv 2>&1 | grep "Uvicorn running on" >/dev/null && break
+        let i=i+1
+        [[ $i -gt 45 ]] && break
+      done
+    - docker logs ipsclient_srv 2>&1 | grep "Uvicorn running on"
+    - docker-compose down
+    
+
