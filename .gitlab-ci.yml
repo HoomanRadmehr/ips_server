@@ -15,6 +15,7 @@ build:
     - docker-compose down || true
     - docker rm -f ipsclient_srv || true
     - docker-compose up -d
+    - sleep 900
     - |+
       i=1
       while [ True ]; do
