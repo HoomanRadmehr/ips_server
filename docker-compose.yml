@@ -4,9 +4,9 @@ services:
       container_name: postgres_ips_server
       image: nexus:443/postgres:latest
       environment:
-          - IPS_SERVER_POSTGRES_USER=postgres
-          - IPS_SERVER_POSTGRES_PASSWORD=postgres
-          - IPS_SERVER_POSTGRES_DB=ips_server
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_DB=ips_server
       ports:
           - '5432:5432'
       restart: unless-stopped
