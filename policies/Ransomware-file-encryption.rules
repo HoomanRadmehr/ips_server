@@ -1,0 +1,1 @@
+drop tcp $HOME_NET any -> $EXTERNAL_NET any (msg:"Possible Ransomware File Encryption Activity"; content:"|2e 2e 2e 00 01 00 00|"; depth:10; sid:1000001; rev:1;)

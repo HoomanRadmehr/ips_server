@@ -1,0 +1,1 @@
+drop tcp any any -> $HOME_NET any (msg:"ping detected"; sid:1000003; rev:1;classtype:icmp-event;)

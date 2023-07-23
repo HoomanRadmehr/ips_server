@@ -7,7 +7,7 @@ from ips_server import settings
 
 
 urlpatterns = [
-    # path('@dmin/', admin.site.urls),
+    path('@dmin/', admin.site.urls),
     path('rules/',include("rules.urls",namespace='rules')),
     path('users/',include("user_manager.urls",namespace="users")),
     path('products/',include("products.urls",namespace='products')),

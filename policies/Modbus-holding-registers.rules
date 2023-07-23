@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET 502 (msg:"Block Modbus Function Code 0x03 (Read Holding Registers) Attack"; content:"|00 00 00 00 00 06 01 03 00 00 00 01|"; sid:1000003; rev:1;)

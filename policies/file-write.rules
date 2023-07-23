@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"Suspicious File Write Operation"; content:"|57 72 69 74 65|"; nocase; sid:100006; rev:1;)

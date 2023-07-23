@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"Modbus Function Code Abuse"; flow:to_server,established; content:"|01|"; depth: 1; pcre:"/\|01 (\d+) /"; content:!"|00|"; sid:100002; rev:1;)

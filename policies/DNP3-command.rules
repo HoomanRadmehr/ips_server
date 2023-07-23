@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"DNP3 Command Injection"; flow:to_server,established; content:"|05 64 01|"; depth: 3; pcre:"/\|05 64 01 14 00 07 (\d+) \|/"; content:!"|00|"; sid:100003; rev:1;)

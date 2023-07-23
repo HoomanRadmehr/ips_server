@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"Modbus TCP Transaction Length Anomaly"; flow:to_server,established; content:"|00 00|"; depth: 2; byte_test:1,>,253,0; sid:100005; rev:1;)

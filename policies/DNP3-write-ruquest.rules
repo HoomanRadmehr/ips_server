@@ -1,0 +1,4 @@
+drop tcp any any -> any 20000 (msg:"DNP3 Write Request Detected"; \
+flow:to_server,established; \
+content:"|05 C0|"; offset:0; depth:2; \
+sid:1000001; rev:1;)

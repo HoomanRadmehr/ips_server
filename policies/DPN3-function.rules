@@ -1,0 +1,5 @@
+drop tcp any any -> any 20000 (msg:"DNP3 Function Code Anomaly Detected"; \
+flow:to_server,established; \
+dsize:1; content:"|05|"; \
+content:"|01| |02| |03| |04| |05| |06| |07| |08|"; \
+sid:1000003; rev:1;)

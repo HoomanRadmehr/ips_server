@@ -1,0 +1,1 @@
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Block Stuxnet Command and Control (C&C) traffic"; content:"stuxnet"; nocase; sid:1000001; rev:1;)

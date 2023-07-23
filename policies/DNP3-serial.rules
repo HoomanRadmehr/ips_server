@@ -1,0 +1,6 @@
+drop tcp any any -> any any (msg:"DNP3 Serial Communication detected"; \
+flow:to_server,established; \
+content:"|05|"; offset:0; depth:1; \
+content:"|C0|"; offset:1; depth:1; \
+content:"|NN|"; offset:3; depth:1; \
+sid:1000001; rev:1;)

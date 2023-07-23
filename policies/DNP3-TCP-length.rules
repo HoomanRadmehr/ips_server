@@ -1,0 +1,1 @@
+alert tcp any any -> any any (msg:"DNP3 TCP Transaction Length Anomaly"; flow:to_server,established; content:"|00 00 00 05|"; depth: 4; byte_test:1,>,253,0; sid:100006; rev:1;)

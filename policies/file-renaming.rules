@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"Suspicious File Renaming"; content:"rename"; nocase; sid:100002; rev:1;)

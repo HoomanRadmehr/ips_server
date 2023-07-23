@@ -1,0 +1,1 @@
+drop $EXTERNAL_NET any -> $HOME_NET 502 (msg:"Block Modbus Function Code 0x04 (Read Input Registers) Attack"; content:"|00 00 00 00 00 06 01 04 00 00 00 01|"; sid:1000004; rev:1;)

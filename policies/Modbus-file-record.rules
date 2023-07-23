@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET 502 (msg:"Block Modbus Function Code 0x2B (Write File Record) Attack"; content:"|00 00 00 00 00 0B 01 2B 00 00 00 01 02|"; sid:1000004; rev:1;)

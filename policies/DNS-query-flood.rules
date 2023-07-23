@@ -1,0 +1,1 @@
+drop udp any any -> any 53 (msg:"DNS Query Flood Attack Detected"; dsize: >512; threshold: type threshold, track by_src, count 100, seconds 60; sid:100001; rev:1;)

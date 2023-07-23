@@ -1,0 +1,1 @@
+drop udp any 53 -> any any (msg:"DNS Response with Unexpected Data Length"; content:"|AA AA|"; depth: 2; content:"|00 01 00 01 00 00 00 00|"; offset: 2; content:"|C0 0C|"; offset: 12; threshold: type threshold, track by_src, count 5, seconds 10; sid:100005; rev:1;)

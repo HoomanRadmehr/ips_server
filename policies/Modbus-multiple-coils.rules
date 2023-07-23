@@ -1,0 +1,5 @@
+drop tcp any any -> any 502 (msg:"Modbus Excessive Write Multiple Coils Request"; \
+flow:to_server,established; \
+content:"\x0F"; offset:7; depth:2; \
+byte_test:2,>,16,0,relative; \
+sid:1000005; rev:1;)

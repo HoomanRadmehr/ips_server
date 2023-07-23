@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"Suspicious Encrypted File Extension"; content:"|2E 64 61 74 61 00|"; sid:100003; rev:1;)

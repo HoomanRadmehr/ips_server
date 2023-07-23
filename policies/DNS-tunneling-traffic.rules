@@ -1,0 +1,1 @@
+alert udp any any -> any 53 (msg:"DNS Tunneling Traffic Detected"; content:"|AA AA|"; depth: 2; pcre:"/\|AA AA (\w+)\|/"; sid:100004; rev:1;)

@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"Unusual File Modification"; content:"|00 4C 00 69 00 62 00 72 00 61 00 72 00 79 00 00|"; sid:100004; rev:1;)

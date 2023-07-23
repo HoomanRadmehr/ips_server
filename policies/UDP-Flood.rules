@@ -1,0 +1,1 @@
+drop udp any any -> any any (msg:"UDP Flood Attack Detected"; threshold: type threshold, track by_src, count 100, seconds 60; sid:100006; rev:1;)

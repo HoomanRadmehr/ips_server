@@ -1,0 +1,4 @@
+drop tcp any any -> any 502 (msg:"Modbus Broadcast Request Detected"; \
+flow:to_server,established; \
+content:"\x00\x01"; depth:2; \
+sid:1000003; rev:1;)

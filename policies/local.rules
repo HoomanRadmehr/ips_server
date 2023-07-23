@@ -1,0 +1,3 @@
+reject icmp any any -> 10.1.1.249 any (msg:”ping requests.”; sid:10000001;)
+
+reject tcp 10.1.1.28 any -> 10.1.1.249 any (msg:”mobile attempting multiple apache server access” ;sid:1000002;)

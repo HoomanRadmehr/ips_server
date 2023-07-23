@@ -1,0 +1,1 @@
+drop udp any any -> any 53 (msg:"DNS Amplification Attack Detected"; content:"|AA AA|"; depth: 2; content:"|00 01|"; offset: 2; threshold: type threshold, track by_src, count 100, seconds 60; sid:100004; rev:1;)

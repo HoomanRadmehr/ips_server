@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Possible IEC 60870-5-104 RTU Communication Anomaly"; content:"|68 0A 00 0A 00 01 00 00 00 00 00 01|"; sid:1000003; rev:1;)

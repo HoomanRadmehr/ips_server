@@ -1,0 +1,1 @@
+drop tcp $HOME_NET any -> $EXTERNAL_NET any (msg:"Possible Ransomware Behavior"; content:"|4C 6F 61 64 4C 69 62 72 61 72 79|"; sid:1000004; rev:1;)

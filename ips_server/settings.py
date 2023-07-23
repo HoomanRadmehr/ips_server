@@ -215,7 +215,7 @@ EMAIL_HOST_USER=os.getenv("IPS_SERVER_EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("IPS_SERVER_EMAIL_HOST_PASSWORD")
 
 #snort
-IPS_SERVER_SNORT_RULES_PATH=os.getenv("IPS_SERVER_SNORT_RULES_PATH")
+IPS_SERVER_SNORT_RULES_PATH=os.path.join(BASE_DIR,"policies/")
 
 if MODE:
     if MODE.lower()=="production" or MODE.lower()=='prod':

@@ -1,0 +1,1 @@
+alert tcp $EXTERNAL_NET any -> $HOME_NET 502 (msg:"Block Modbus Function Code 0x01 (Read Coils) Attack"; content:"|00 00 00 00 00 06 01 01 00 00 00 01|"; sid:1000001; rev:1;)

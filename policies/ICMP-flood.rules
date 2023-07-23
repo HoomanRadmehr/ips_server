@@ -1,0 +1,1 @@
+drop icmp any any -> any any (msg:"ICMP Flood Attack Detected"; icmp_type:8; threshold: type threshold, track by_src, count 100, seconds 60; sid:100005; rev:1;)

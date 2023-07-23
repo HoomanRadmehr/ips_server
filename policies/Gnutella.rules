@@ -1,0 +1,1 @@
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Block Gnutella traffic"; app-layer-event: appid, appid_name gnutella; sid:1000003; rev:1;)

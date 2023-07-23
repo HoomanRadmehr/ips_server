@@ -1,0 +1,5 @@
+drop tcp any any -> any 502 (msg:"Modbus Function Code Anomaly Detected"; \
+flow:to_server,established; \
+content:"\x01\x02\x03\x04\x05\x06\x0F\x10"; \
+threshold:type both, track by_src, count 5, seconds 60; \
+sid:1000001; rev:1;)

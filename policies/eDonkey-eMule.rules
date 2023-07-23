@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Block eDonkey/eMule traffic"; app-layer-event: appid, appid_name edonkey; sid:1000002; rev:1;)

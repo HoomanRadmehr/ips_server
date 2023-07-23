@@ -1,0 +1,1 @@
+alert udp any any -> any 53 (msg:"DNS Request for Known Malicious Domain"; content:"|AA AA|"; depth: 2; content:"|00 01 00 00 00 01 00 00 00 00 00 00|"; offset: 2; content:"maliciousdomain.com"; nocase; sid:100006; rev:1;)

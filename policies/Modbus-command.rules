@@ -1,0 +1,1 @@
+drop tcp any any -> any any (msg:"Modbus Command Injection"; flow:to_server,established; content:"|01 04|"; depth: 2; pcre:"/\|01 04 00 13 00 01 (\d+) \|/"; content:!"|00|"; sid:100001; rev:1;)

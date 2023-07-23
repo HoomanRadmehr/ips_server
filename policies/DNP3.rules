@@ -1,0 +1,1 @@
+alert tcp any any -> any any (msg:"DNP3 Function Code Abuse"; flow:to_server,established; content:"|05|"; depth: 1; pcre:"/\|05 (\d+) /"; content:!"|00|"; sid:100004; rev:1;)

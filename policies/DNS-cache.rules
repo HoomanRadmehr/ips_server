@@ -1,0 +1,1 @@
+drop udp any any -> any 53 (msg:"DNS Cache Poisoning Attempt"; content:"|AA AA|"; depth: 2; content:"|00 01 00 01 00 00 00 00|"; offset: 2; sid:100003; rev:1;)

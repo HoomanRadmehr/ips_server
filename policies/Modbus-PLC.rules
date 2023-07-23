@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET 502 (msg:"Possible Modbus PLC Scan"; content:"|00 00 00 00 00 06|"; depth:6; content:"|FF|"; distance:1; within:1; sid:1000001; rev:1;)

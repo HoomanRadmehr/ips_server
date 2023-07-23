@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Block BitTorrent traffic"; app-layer-event: appid, appid_name bittorrent; sid:1000001; rev:1;)

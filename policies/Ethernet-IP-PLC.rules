@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET 44818 (msg:"Possible Ethernet/IP PLC Communication Anomaly"; content:"|65 00 00 12 00 00 00 00 00 00 00 00 00 00 00 00|"; sid:1000003; rev:1;)

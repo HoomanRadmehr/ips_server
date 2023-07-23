@@ -1,0 +1,4 @@
+drop tcp any any -> any 20000 (msg:"DNP3 Unsolicited Response Detected"; \
+flow:to_server,established; \
+content:"|05 81|"; offset:0; depth:2; \
+sid:1000002; rev:1;)

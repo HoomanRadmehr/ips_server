@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Block Stuxnet protocol detection"; content:"stuxnet_protocol"; nocase; sid:1000004; rev:1;)

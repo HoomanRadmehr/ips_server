@@ -1,0 +1,1 @@
+drop tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Possible Ransomware Dropper Download"; content:"GET /malware.exe"; sid:1000003; rev:1;)

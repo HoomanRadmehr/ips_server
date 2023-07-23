@@ -1,0 +1,1 @@
+alert tcp any any -> $HOME_NET any (msg:"Block traffic from known malicious IP"; iprep: src, [IP_REPUTATION_LIST]; sid:1000001; rev:1;)

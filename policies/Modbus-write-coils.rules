@@ -1,0 +1,5 @@
+drop tcp any any -> any 502 (msg:"Modbus Invalid Write to Coil Request"; \
+flow:to_server,established; \
+content:"\x05"; offset:7; depth:2; \
+content:"\x00\x00\xFF\xFF"; distance:1; within:4; \
+sid:1000004; rev:1;)
