@@ -55,4 +55,3 @@ alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-FRONTPAGE dvw
 alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-FRONTPAGE register.htm access"; flow:to_server,established; uricontent:"/_private/register.htm"; nocase; classtype:web-application-activity; sid:968; rev:6;)
 alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-FRONTPAGE /_vti_bin/ access"; flow:to_server,established; uricontent:"/_vti_bin/"; nocase; reference:nessus,11032; classtype:web-application-activity; sid:1288; rev:8;)
 alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-FRONTPAGE _vti_inf.html access"; flow:to_server,established; uricontent:"/_vti_inf.html"; nocase; reference:nessus,11455; classtype:web-application-activity; sid:990; rev:9;)
-
