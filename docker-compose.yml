@@ -16,7 +16,7 @@ services:
       restart: always
       environment:
           - IPS_SERVER_POSTGRES_NAME=ips_server
-          - IPS_SERVER_POSTGRES_HOST=localhost
+          - IPS_CLIENT_POSTGRES_HOST=psql
           - IPS_SERVER_POSTGRES_PORT=5432
           - IPS_SERVER_POSTGRES_USER=postgres
           - IPS_SERVER_POSTGRES_PASSWORD=postgres
