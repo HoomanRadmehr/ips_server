@@ -14,7 +14,7 @@ build:
     - 'echo "10.27.95.5 nexus" >>/etc/hosts'
     - docker-compose down || true
     - docker rm -f ipsclient_srv || true
-    - docker-compose up -d
+    - docker-compose up
     - sleep 900
     - |+
       i=1
@@ -26,5 +26,3 @@ build:
       done
     - docker logs ipsclient_srv 2>&1 | grep "Uvicorn running on"
     - docker-compose down
-    
-
