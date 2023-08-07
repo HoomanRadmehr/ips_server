@@ -20,7 +20,7 @@ class ListRuleView(generics.ListAPIView):
     queryset = Rule.objects.filter(is_verified=True,is_public=True)
     filter_backends = [DjangoFilterBackend,SearchFilter]
     filterset_fields = ['created_at','updated_at']
-    search_fields = ['description']
+    search_fields = ['description','name']
     pagination_class = CustomPagination
     
     def get_queryset(self):
